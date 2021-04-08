@@ -1,0 +1,18 @@
+{
+  "name": "vac",
+  "version": "1.0.0",
+  "description": "Spain Covid-19 Vaccination",
+  "main": "main.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "test",
+    "sass": "node-sass -w scss/ -o css/ --recursive"
+  },
+  "author": "Nel Muñiz",
+  "license": "MIT",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.1"
+  }
+}

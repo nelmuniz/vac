@@ -1,0 +1,66 @@
+<script>
+    // Vaccinated chart
+    var vaccinatedChart = new Chart(document.getElementById("vaccinated"), {
+        type: "line",
+        data: {
+            labels: [ <%- dates_vaccinated %> ],
+            datasets: [{
+                    label: "People fully vaccinated per hundred",
+                    data: [ <%- fully_hundred %> ],
+                    fill: false,
+                    borderColor: "green",
+                    tension: 0.1,
+                },
+                {
+                    label: "People vaccinated per hundred",
+                    data: [ <%- people_hundred %> ],
+                    fill: false,
+                    borderColor: "blue",
+                    tension: 0.1,
+                },
+            ],
+        },
+        options: {
+            maintainAspectRatio: false,
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: "top",
+                },
+                title: {
+                    display: true,
+                    text: "Spain COVID-19 vaccination",
+                },
+            },
+        },
+    });
+
+    // Daily vaccinations chart
+    let dailyChart = new Chart(document.getElementById("daily"), {
+        type: "line",
+        data: {
+            labels: [ <%- dates_daily %> ],
+            datasets: [{
+                    label: "Spain COVID-19 daily vaccinations",
+                    data: [ <%- daily %> ],
+                    fill: false,
+                    borderColor: "purple",
+                    tension: 0.1,
+                },
+            ],
+        },
+        options: {
+            maintainAspectRatio: false,
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: "top",
+                },
+                title: {
+                    display: true,
+                    text: "Spain daily vaccinations",
+                },
+            },
+        },
+    });
+</script>
