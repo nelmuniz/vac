@@ -1,5 +1,6 @@
 const express = require('express');
 const fetch = require('node-fetch');
+const port = process.env.PORT || 8080;
 
 let app = express();
 
@@ -87,6 +88,6 @@ app.use('*', async (req, res) => {
 });
 
 // Start server
-app.listen(8080);
+app.listen(port);
 console.log('Spain COVID-19 vaccination');
-console.log('Server started: http://localhost:8080');
+console.log(`Server started on port: ${port}`);
