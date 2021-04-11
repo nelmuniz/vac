@@ -50,11 +50,11 @@ app.use('*', async (req, res) => {
 
         }
         // If daily vaccinations informed
-        if (day.daily_vaccinations != null) {
+        if (day.daily_vaccinations_raw != null) {
             // Insert dates array
             dates_daily.push(new String(`"` + day.date + `"`));
             // Insert daily vaccinations array
-            daily.push(new String(`"` + day.daily_vaccinations + `"`));
+            daily.push(new String(`"` + day.daily_vaccinations_raw + `"`));
         }
     });
 
@@ -70,7 +70,7 @@ app.use('*', async (req, res) => {
     last_people = data.reduce((a, b) => ((b.date > a.date) && (b.people_vaccinated_per_hundred != null)) ? b : a).people_vaccinated_per_hundred;
 
     // Last - Daily vaccinations
-    last_daily = data.reduce((a, b) => ((b.date > a.date) && (b.daily_vaccinations != null)) ? b : a).daily_vaccinations;
+    last_daily = data.reduce((a, b) => ((b.date > a.date) && (b.daily_vaccinations_raw != null)) ? b : a).daily_vaccinations_raw;
 
     // Render Index with Spain data
     res.render('index.ejs', {

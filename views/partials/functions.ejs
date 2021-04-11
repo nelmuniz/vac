@@ -1,66 +1,128 @@
 <script>
-    // Vaccinated chart
-    var vaccinatedChart = new Chart(document.getElementById("vaccinated"), {
-        type: "line",
-        data: {
-            labels: [ <%- dates_vaccinated %> ],
-            datasets: [{
-                    label: "People fully vaccinated per hundred",
+
+let texts = {};
+let lan;
+let vaccinatedChart;
+let dailyChart;
+
+    // Load
+    let load = async () => {
+
+        // Get Spanish texts 
+        await getTexts('es');
+
+        // Get charts
+        getCharts();
+
+    }
+
+    // Get translated texts
+    let getTexts = async (language) => {
+
+        // Set language
+        lan = language;
+
+        // Get texts
+        await $.getJSON("texts.json", (data) => texts = data);
+
+        // Get texts keys
+        let keys = Object.keys(texts);
+
+        // Iterate texts keys
+        keys.forEach((key, index) => {
+            // Set text
+            $(`.t-${key}`).html(texts[key][lan]);
+        });
+    }
+
+    // Get Charts
+    let = getCharts = () => {
+
+        // Vaccinated chart
+        vaccinatedChart = new Chart($("#vaccinated"), {
+            type: "line",
+            data: {
+                labels: [ <%- dates_vaccinated %> ],
+                datasets: [{
+                    label: texts.fully_hundred[lan],
                     data: [ <%- fully_hundred %> ],
                     fill: false,
                     borderColor: "green",
                     tension: 0.1,
                 },
                 {
-                    label: "People vaccinated per hundred",
+                    label: texts.people_hundred[lan],
                     data: [ <%- people_hundred %> ],
                     fill: false,
                     borderColor: "blue",
                     tension: 0.1,
                 },
-            ],
-        },
-        options: {
-            maintainAspectRatio: false,
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: "top",
-                },
-                title: {
-                    display: true,
-                    text: "Spain COVID-19 vaccination",
+                ],
+            },
+            options: {
+                maintainAspectRatio: false,
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: "top",
+                    },
+                    title: {
+                        display: true,
+                        text: texts.title[lan],
+                    },
                 },
             },
-        },
-    });
+        });
 
-    // Daily vaccinations chart
-    let dailyChart = new Chart(document.getElementById("daily"), {
-        type: "line",
-        data: {
-            labels: [ <%- dates_daily %> ],
-            datasets: [{
-                    label: "Spain COVID-19 daily vaccinations",
+        // Daily vaccinations chart
+        dailyChart = new Chart($("#daily"), {
+            type: "line",
+            data: {
+                labels: [ <%- dates_daily %> ],
+                datasets: [{
+                    label: texts.daily[lan],
                     data: [ <%- daily %> ],
                     fill: false,
                     borderColor: "purple",
                     tension: 0.1,
                 },
-            ],
-        },
-        options: {
-            maintainAspectRatio: false,
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: "top",
-                },
-                title: {
-                    display: true,
-                    text: "Spain daily vaccinations",
+                ],
+            },
+            options: {
+                maintainAspectRatio: false,
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: "top",
+                    },
+                    title: {
+                        display: true,
+                        text: texts.daily[lan],
+                    },
                 },
             },
-        },
-    });
+        });
+
+    }
+
+    // Reset Charts
+    let resetCharts = () => {
+
+        // Destroy Charts
+        vaccinatedChart.destroy();
+        dailyChart.destroy();
+
+        // Get Charts
+        getCharts();
+    }
+
+    // Event - DOMContentLoaded
+    document.addEventListener("DOMContentLoaded", (event) => load());
+
+    // Event - Click Spanish
+    document.getElementById("spanish").addEventListener("click", () => { getTexts("es"); resetCharts() });
+
+    // Event - Click English
+    document.getElementById("english").addEventListener("click", () => { getTexts("en"); resetCharts() });
+
 </script>

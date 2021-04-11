@@ -1,0 +1,46 @@
+{
+  "title": {
+    "es": "Vacunación Covid-19 España",
+    "en": "Spain Covid-19 Vaccination"
+  },
+  "fully_hundred": {
+    "es": "Personas totalmente vacunadas por cada 100",
+    "en": "People fully vaccinated per hundred"
+  },
+  "people_hundred": {
+    "es": "Personas vacunadas por cada 100",
+    "en": "People vaccinated per hundred"
+  },
+  "daily": {
+    "es": "Vacunación diaria de Covid-19 en España",
+    "en": "Spain Covid-19 daily vaccinations"
+  },
+  "last_update": {
+    "es": "Última actualización: ",
+    "en": "Last update: "
+  },
+  "card_fully": {
+    "es": "Personas totalmente vacunadas: ",
+    "en": "People fully vaccinated: "
+  },
+  "card_people": {
+    "es": "Personas vacunadas: ",
+    "en": "People vaccinated: "
+  },
+  "card_daily": {
+    "es": "Vacunaciones diarias: ",
+    "en": "Daily vaccinations: "
+  },
+  "language": {
+    "es": "Idioma",
+    "en": "Language"
+  },
+  "spanish": {
+    "es": "Español",
+    "en": "Spanish"
+  },
+  "english": {
+    "es": "Inglés",
+    "en": "English"
+  }
+}
