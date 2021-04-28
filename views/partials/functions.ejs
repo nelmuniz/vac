@@ -6,37 +6,67 @@ let vaccinatedChart;
 let dailyChart;
 
     // Load
-    let load = async () => {
-
+    let load = () => {
         // Get Spanish texts 
-        await getTexts('es');
-
-        // Get charts
-        getCharts();
-
+        getTexts('es').then(() => getCharts());
     }
 
     // Get translated texts
-    let getTexts = async (language) => {
+    let getTexts = (language) => {
 
-        // Set language
-        lan = language;
+        return new Promise( async (resolve,reject) => {
 
-        // Get texts
-        await $.getJSON("texts.json", (data) => texts = data);
+            // Set language
+            lan = language;
 
-        // Get texts keys
-        let keys = Object.keys(texts);
+            // Set HTML lang property
+            document.documentElement.lang = lan;
 
-        // Iterate texts keys
-        keys.forEach((key, index) => {
-            // Set text
-            $(`.t-${key}`).html(texts[key][lan]);
-        });
+            // Get Texts JSON
+            await getTextsJSON.then(() => {
+
+                // Get texts keys
+                let keys = Object.keys(texts);
+
+                // Iterate texts keys
+                keys.forEach((key, index) => {
+                    // Set text
+                    $(`.t-${key}`).html(texts[key][lan]);
+                });
+
+                // Resolve Promise
+                resolve();
+
+            }).catch(() => {
+                // Reject Promise
+                reject();
+            });
+        
+        })
     }
 
+    // Get Texts JSON
+    let getTextsJSON = new Promise( (resolve, reject) => {
+        $.ajax({
+                url: "/texts.json",
+                dataType: 'json',
+                success: (data) => {
+
+                    // Set texts object
+                    texts = data;
+
+                    // Resolve Promise
+                    resolve();
+                },
+                error: function(data) {
+                    // Reject Promise
+                    reject();
+                }
+            });
+    })
+
     // Get Charts
-    let = getCharts = () => {
+    let getCharts = () => {
 
         // Vaccinated chart
         vaccinatedChart = new Chart($("#vaccinated"), {
@@ -120,9 +150,18 @@ let dailyChart;
     document.addEventListener("DOMContentLoaded", (event) => load());
 
     // Event - Click Spanish
-    document.getElementById("spanish").addEventListener("click", () => { getTexts("es"); resetCharts() });
+    document.getElementById("spanish").addEventListener("click", () => { getTexts("es").then(() => resetCharts()).catch() });
 
     // Event - Click English
-    document.getElementById("english").addEventListener("click", () => { getTexts("en"); resetCharts() });
+    document.getElementById("english").addEventListener("click", () => { getTexts("en").then(() => resetCharts()).catch() });
+
+    // Service Worker
+    if("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/serviceWorker.js").then((reg)=>{
+          console.log("Service worker registered", reg);
+        })
+      })
+    }
 
 </script>
